@@ -1,7 +1,7 @@
 # Adgent Protocol
 ## Autonomous AI-Driven DeFi Investment System with Zero-Trust Security on Celo
 
-![x402 Architecture Banner](x402.jpg)
+![x402 Architecture Banner](x402.png)
 
 ### pinned: Quick Links & Resources
 - **Live Web Application**: [https://fronted-ai-adgent.vercel.app/](https://fronted-ai-adgent.vercel.app/)
