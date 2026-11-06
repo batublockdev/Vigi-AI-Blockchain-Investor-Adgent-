@@ -96,83 +96,95 @@ export const ProtectionLog: React.FC = () => {
     switch (action) {
       case 'SELL_ALL':
       case 'SELL_PROFIT':
-        return 'text-rose-800 bg-rose-50 border-rose-200';
+        return 'bg-rose-50 border-rose-200/60 text-rose-600';
       case 'INVEST':
       case 'SIMULATE_INVEST':
       case 'deposit':
-        return 'text-emerald-800 bg-emerald-50 border-emerald-200';
+        return 'bg-[#2540EB]/5 border-[#2540EB]/10 text-[#2540EB]';
       case 'PAUSE':
-        return 'text-amber-800 bg-amber-50 border-amber-200';
+        return 'bg-amber-50 border-amber-200/60 text-amber-700';
       default:
-        return 'text-slate-800 bg-slate-50 border-slate-200';
+        return 'bg-stone-50 border-stone-200 text-[#6B7280]';
     }
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs">
-      <div className="border-b border-slate-100 px-6 py-4">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="text-base font-extrabold text-slate-900">
-              Critical Events &amp; Protection Audit
+    <div
+      className="overflow-hidden rounded-2xl border border-stone-200/80 bg-[#FAFAF9] shadow-sm"
+      style={{ fontFamily: 'var(--font-inter)' }}
+    >
+      {/* Header */}
+      <div className="border-b border-stone-100 px-8 py-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-1">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
+              Audit Trail
+            </p>
+            <h2
+              className="text-xl font-bold text-[#0C1424]"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              Critical Events &amp; Protection Log
             </h2>
-            <p className="text-xs text-slate-500">
-              Filtered audit log: stores executed sales, investments, deposits, and automated circuit breaker pauses
+            <p className="text-sm text-[#6B7280]">
+              Executed sales, investments, deposits, and automated circuit breaker pauses
             </p>
           </div>
 
           <button
             onClick={() => fetchActivities()}
-            className="self-start sm:self-auto rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition"
+            className="self-start sm:self-auto rounded-2xl border border-stone-200 bg-white px-4 py-2 text-xs font-medium text-[#0C1424] hover:bg-stone-50 transition-colors"
           >
-            {loading ? 'Refreshing...' : 'Refresh'}
+            {loading ? 'Refreshing…' : 'Refresh'}
           </button>
         </div>
 
         {/* Filter bar */}
-        <div className="mt-4 flex flex-wrap items-center gap-3">
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by event or asset..."
-            className="flex-1 min-w-[200px] rounded-lg border border-slate-200 bg-slate-50 py-1.5 px-3 text-xs text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:bg-white focus:outline-none"
+            placeholder="Search by event or asset…"
+            className="flex-1 min-w-[220px] rounded-2xl border border-stone-200 bg-stone-50/50 py-2 px-4 text-sm text-[#0C1424] placeholder-[#6B7280]/60 focus:border-[#2540EB]/40 focus:bg-white focus:outline-none transition-colors"
           />
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 font-semibold">Filter:</span>
-            <select
-              value={assetFilter}
-              onChange={(e) => {
-                setAssetFilter(e.target.value);
-                setPage(1);
-              }}
-              className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-800 font-medium focus:border-emerald-500 focus:bg-white focus:outline-none"
-            >
-              <option value="ALL">All Tokens</option>
-              <option value="WETH">Ethereum (ETH)</option>
-              <option value="WBTC">Bitcoin (BTC)</option>
-              <option value="USD₮">Tether USD (USDT)</option>
-            </select>
-          </div>
+          <select
+            value={assetFilter}
+            onChange={(e) => {
+              setAssetFilter(e.target.value);
+              setPage(1);
+            }}
+            className="rounded-2xl border border-stone-200 bg-stone-50/50 px-4 py-2 text-sm text-[#0C1424] font-medium focus:border-[#2540EB]/40 focus:bg-white focus:outline-none transition-colors"
+          >
+            <option value="ALL">All Tokens</option>
+            <option value="WETH">Ethereum (ETH)</option>
+            <option value="WBTC">Bitcoin (BTC)</option>
+            <option value="USD₮">Tether USD (USDT)</option>
+          </select>
         </div>
       </div>
 
       {/* Rows */}
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-stone-100">
         {loading && activities.length === 0 ? (
-          <div className="py-12 text-center text-slate-400 text-sm">
-            Loading critical events...
+          <div className="py-16 text-center text-[#6B7280] text-sm">
+            Loading critical events…
           </div>
         ) : activities.length === 0 ? (
-          <div className="py-12 px-6 text-center text-slate-500">
-            <div className="max-w-md mx-auto space-y-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 inline-block mb-1 animate-pulse" />
-              <p className="font-extrabold text-slate-800 text-sm">
+          <div className="py-16 px-8 text-center">
+            <div className="max-w-md mx-auto space-y-3">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#2540EB] inline-block mb-2 animate-pulse" />
+              <p
+                className="font-bold text-[#0C1424] text-base"
+                style={{ fontFamily: 'var(--font-playfair)' }}
+              >
                 All Positions Monitored &amp; Protected
               </p>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                The database optimization filtered out routine polling. Only critical on-chain actions (auto-sales, re-investments, user deposits, or 24h cooldown pauses) will be recorded here.
+              <p className="text-sm text-[#6B7280] leading-relaxed">
+                The database optimization filtered out routine polling. Only critical on-chain
+                actions — auto-sales, re-investments, user deposits, or 24h cooldown pauses —
+                will appear here.
               </p>
             </div>
           </div>
@@ -184,38 +196,40 @@ export const ProtectionLog: React.FC = () => {
             return (
               <div
                 key={item.id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between px-6 py-3.5 hover:bg-slate-50/70 transition gap-2"
+                className="flex flex-col sm:flex-row sm:items-center justify-between px-8 py-5 hover:bg-stone-50/50 transition-colors gap-3"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   {assetInfo.logo}
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-slate-900 text-xs">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-3">
+                      <span className="font-semibold text-[#0C1424] text-sm">
                         {assetInfo.name}
                       </span>
-                      <span className={`text-[10px] font-bold border px-2 py-0.2 rounded ${getActionBadgeStyle(item.action)}`}>
+                      <span
+                        className={`text-[10px] font-semibold uppercase tracking-wider border px-2.5 py-0.5 rounded-full ${getActionBadgeStyle(item.action)}`}
+                      >
                         {item.action}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
+                    <p className="text-xs text-[#6B7280] leading-relaxed">
                       {item.reason || 'Critical position event recorded.'}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between sm:justify-end gap-6 text-xs">
+                <div className="flex items-center justify-between sm:justify-end gap-8 text-xs">
                   {valUSD !== null && (
-                    <div className="text-right">
-                      <span className="text-slate-400 text-[10px] block uppercase font-bold">
+                    <div className="text-right space-y-0.5">
+                      <span className="text-[10px] uppercase tracking-wider text-[#6B7280]/70 block font-medium">
                         Market Value
                       </span>
-                      <span className="font-mono font-bold text-slate-800">
+                      <span className="font-mono font-semibold text-[#0C1424]">
                         ${valUSD.toFixed(4)} USD
                       </span>
                     </div>
                   )}
 
-                  <div className="text-right font-mono text-slate-400 text-[11px]">
+                  <div className="text-right font-mono text-[#6B7280] text-[11px]">
                     {formatTimestamp(item.timestamp)}
                   </div>
                 </div>
@@ -227,24 +241,26 @@ export const ProtectionLog: React.FC = () => {
 
       {/* Pagination */}
       {totalCount > 0 && (
-        <div className="flex items-center justify-between border-t border-slate-100 px-6 py-3 text-xs text-slate-500">
+        <div className="flex items-center justify-between border-t border-stone-100 px-8 py-4 text-xs text-[#6B7280]">
           <div>
-            Page <span className="font-bold text-slate-800">{page}</span> of{' '}
-            <span className="font-bold text-slate-800">{totalPages}</span>
+            <span className="text-[10px] uppercase tracking-wider">Page</span>{' '}
+            <span className="font-bold text-[#0C1424]">{page}</span>{' '}
+            <span className="text-[10px] uppercase tracking-wider">of</span>{' '}
+            <span className="font-bold text-[#0C1424]">{totalPages}</span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1 || loading}
-              className="rounded-lg border border-slate-200 bg-white px-3 py-1 text-slate-700 font-medium hover:bg-slate-50 disabled:opacity-40"
+              className="rounded-lg border border-stone-200 bg-white px-4 py-1.5 text-[#0C1424] font-medium hover:bg-stone-50 disabled:opacity-40 transition-colors"
             >
               Previous
             </button>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages || loading}
-              className="rounded-lg border border-slate-200 bg-white px-3 py-1 text-slate-700 font-medium hover:bg-slate-50 disabled:opacity-40"
+              className="rounded-lg border border-stone-200 bg-white px-4 py-1.5 text-[#0C1424] font-medium hover:bg-stone-50 disabled:opacity-40 transition-colors"
             >
               Next
             </button>

@@ -34,14 +34,12 @@ export const AiActivity: React.FC<AiActivityProps> = ({ decisions }) => {
         return {
           title: `Moved $${numAmountUSD.toFixed(2)} ${asset || 'USD'} into Safe Cash Reserve`,
           tag: 'Reserve Protection',
-          color: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-          explanation: `The AI noticed available liquid cash ($${numAmountUSD.toFixed(2)} USD) and deposited it into the safe interest reserve to prevent funds from sitting idle.`,
+          explanation: `Vigi noticed available liquid cash ($${numAmountUSD.toFixed(2)} USD) and deposited it into the safe interest reserve to prevent funds from sitting idle.`,
         };
       case 'swap':
         return {
           title: `Reallocated Capital into Target Assets`,
           tag: 'Strategic Buy',
-          color: 'bg-blue-50 text-blue-800 border-blue-200',
           explanation:
             'Identified favorable entry pricing and adjusted token allocations within your preset risk limits.',
         };
@@ -49,7 +47,6 @@ export const AiActivity: React.FC<AiActivityProps> = ({ decisions }) => {
         return {
           title: `Held Current Positions Without Unnecessary Trades`,
           tag: 'Preserve Capital',
-          color: 'bg-slate-100 text-slate-800 border-slate-200',
           explanation:
             'Market is moving within normal volatility bands. Staying in position saves on transaction fees while capital continues compounding.',
         };
@@ -57,8 +54,7 @@ export const AiActivity: React.FC<AiActivityProps> = ({ decisions }) => {
         return {
           title: `Portfolio Optimization: ${action.toUpperCase()}`,
           tag: 'Automated Move',
-          color: 'bg-slate-100 text-slate-800 border-slate-200',
-          explanation: 'AI executed an optimization according to your safety guidelines.',
+          explanation: 'Vigi executed an optimization according to your safety guidelines.',
         };
     }
   };
@@ -74,25 +70,33 @@ export const AiActivity: React.FC<AiActivityProps> = ({ decisions }) => {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs">
-      <div className="flex flex-col gap-1 border-b border-slate-100 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-base font-extrabold text-slate-900">
-            What Your AI Pilot Did
+    <div
+      className="overflow-hidden rounded-2xl border border-stone-200/60 bg-[#FAFAF9] shadow-sm"
+      style={{ fontFamily: 'var(--font-inter)' }}
+    >
+      {/* Header */}
+      <div className="flex flex-col gap-3 border-b border-stone-100 px-8 py-7 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1.5">
+          <h2
+            className="text-xl font-bold tracking-tight text-[#0C1424]"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            What Vigi Did
           </h2>
-          <p className="text-xs text-slate-500">
-            Real decisions made with the capital you delegated to the artificial intelligence
+          <p className="text-sm text-[#6B7280] leading-relaxed">
+            Real decisions made by Vigi with delegated capital
           </p>
         </div>
-        <span className="self-start rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-700">
+        <span className="self-start rounded-full border border-[#2540EB]/10 bg-[#2540EB]/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#2540EB]">
           Autonomous Pilot
         </span>
       </div>
 
-      <div className="divide-y divide-slate-100 p-2 sm:p-4">
+      {/* Decision List */}
+      <div className="divide-y divide-stone-100 px-6 py-2">
         {decisions.length === 0 ? (
-          <div className="py-12 text-center text-slate-400 text-sm">
-            AI is monitoring the market. Recent moves will be logged here.
+          <div className="py-20 text-center text-sm text-[#6B7280]">
+            Vigi is monitoring the market. Recent moves will be logged here.
           </div>
         ) : (
           decisions.map((dec) => {
@@ -102,36 +106,40 @@ export const AiActivity: React.FC<AiActivityProps> = ({ decisions }) => {
             return (
               <div
                 key={dec.id}
-                className="p-4 transition rounded-2xl hover:bg-slate-50/80"
+                className="px-2 py-6 transition-colors duration-200 rounded-2xl hover:bg-stone-50/50"
               >
                 <div
-                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer"
+                  className="flex flex-col gap-4 cursor-pointer sm:flex-row sm:items-center sm:justify-between"
                   onClick={() => toggleExpand(dec.id)}
                 >
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-bold text-slate-900 text-sm">{item.title}</span>
-                      <span className={`rounded border px-2 py-0.5 text-[10px] font-bold ${item.color}`}>
+                  {/* Left: Title + Tag + Explanation */}
+                  <div className="space-y-2 min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="text-sm font-semibold text-[#0C1424] leading-snug">
+                        {item.title}
+                      </span>
+                      <span className="rounded-md border border-[#2540EB]/10 bg-[#2540EB]/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#2540EB]">
                         {item.tag}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                    <p className="text-sm text-[#6B7280] leading-relaxed max-w-xl">
                       {item.explanation}
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between sm:justify-end gap-5 shrink-0">
-                    <div className="text-right">
-                      <span className="text-[11px] font-mono text-slate-400 block">
+                  {/* Right: Date + Confidence + Toggle */}
+                  <div className="flex items-center justify-between gap-6 shrink-0 sm:flex-col sm:items-end sm:gap-1.5">
+                    <div className="text-right space-y-1.5">
+                      <span className="block text-[10px] font-mono uppercase tracking-wider text-[#6B7280]">
                         {formatDate(dec.timestamp)}
                       </span>
-                      <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full inline-block mt-0.5">
-                        {dec.confidence}% AI Confidence
+                      <span className="inline-block rounded-full bg-[#2540EB]/5 px-2.5 py-0.5 text-[10px] font-semibold text-[#2540EB]">
+                        {dec.confidence}% Confidence
                       </span>
                     </div>
 
                     <button
-                      className="text-xs font-semibold text-slate-500 hover:text-slate-900 transition"
+                      className="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280] transition-colors hover:text-[#2540EB]"
                       aria-label="Toggle analysis"
                     >
                       {isExpanded ? 'Hide' : 'Details'}
@@ -139,12 +147,16 @@ export const AiActivity: React.FC<AiActivityProps> = ({ decisions }) => {
                   </div>
                 </div>
 
+                {/* Expanded Details */}
                 {isExpanded && (
-                  <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs">
-                    <span className="font-bold text-slate-800 block mb-1">
-                      AI Thought Process &amp; Financial Calculations:
+                  <div className="mt-6 rounded-2xl border border-stone-200/60 bg-stone-50/50 p-6">
+                    <span className="mb-3 block text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
+                      Vigi&apos;s Thought Process &amp; Financial Calculations
                     </span>
-                    <p className="font-sans text-slate-600 leading-relaxed whitespace-pre-line bg-white p-3 rounded-lg border border-slate-200">
+                    <p
+                      className="rounded-xl border border-stone-200/60 bg-white p-4 text-sm leading-relaxed text-[#0C1424]/80 whitespace-pre-line"
+                      style={{ fontFamily: 'var(--font-inter)' }}
+                    >
                       {dec.reason}
                     </p>
                   </div>

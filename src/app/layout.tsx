@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-jakarta",
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "My AI Portfolio — Automated Investing",
-  description: "Simple automated wealth portfolio with risk limits and autonomous AI rebalancing",
+  title: "Adgent Protocol — Turning Crisis Into Opportunity",
+  description: "Autonomous AI-driven DeFi investment system with zero-trust security on Celo. Stop-loss protection, take-profit harvesting, and AI-managed portfolios.",
 };
 
 export default function RootLayout({
@@ -19,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={jakarta.className}>
-      <body className="min-h-screen bg-[#F8FAFC] text-slate-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 font-sans">
+    <html lang="es" className={`${playfair.className} ${inter.className}`}>
+      <body className="min-h-screen bg-[#F5F5F4] text-slate-900 antialiased font-sans">
         {children}
       </body>
     </html>

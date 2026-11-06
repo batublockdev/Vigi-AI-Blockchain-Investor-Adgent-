@@ -92,12 +92,19 @@ export async function GET() {
         }
       }
 
-      // 3. Decisions from AI Agent
+      // 3. Decisions from AI Agent — including tx_hash and payment_tx
       const decisionsRes = await client.query(
-        `SELECT id, timestamp, action, asset, amount, reason, confidence, level, executed, result 
+        `SELECT id, timestamp, action, asset, amount, reason, confidence, level, executed, result, tx_hash, payment_tx
          FROM decisions ORDER BY timestamp DESC LIMIT 20`
       );
       const decisions = decisionsRes.rows;
+
+      // 3b. Trades executed by Vigi (autonomous)
+      const tradesRes = await client.query(
+        `SELECT id, timestamp, action, asset, amount, tx_hash, level, reason, confidence
+         FROM trades ORDER BY timestamp DESC LIMIT 20`
+      );
+      const trades = tradesRes.rows;
 
       // 4. Performance
       const perfRes = await client.query(
@@ -236,6 +243,7 @@ export async function GET() {
           tvls: parsedTvls,
           knowledge,
           decisions,
+          trades,
           performance,
           positions,
           stats: {

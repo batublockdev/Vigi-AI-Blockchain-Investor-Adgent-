@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { ExternalLink } from 'lucide-react';
 import { BtcLogo, EthLogo, UsdtLogo } from './CoinLogos';
 
 export interface PositionData {
@@ -73,33 +74,47 @@ export const SelectedTokens: React.FC<SelectedTokensProps> = ({
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs">
-      <div className="flex flex-col gap-2 border-b border-slate-100 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-base font-extrabold text-slate-900">
-            My Selected Tokens &amp; Safety Limits
+    <div
+      className="overflow-hidden rounded-2xl border border-stone-200/60 bg-[#FAFAF9] shadow-xs"
+      style={{ fontFamily: 'var(--font-inter)' }}
+    >
+      {/* Header */}
+      <div className="flex flex-col gap-2 border-b border-stone-100 px-8 py-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+          <h2
+            className="text-lg font-bold text-[#0C1424]"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Selected Tokens &amp; Safety Limits
           </h2>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[#6B7280]">
             Live token balances held by the portfolio vault on Celo.
           </p>
           {portfolioAddress && (
-            <a className="mt-1 inline-block font-mono text-[10px] text-emerald-700 hover:underline" href={`https://celoscan.io/address/${portfolioAddress}`} target="_blank" rel="noreferrer">
-              Vault: {portfolioAddress}
+            <a
+              className="mt-1.5 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-[#2540EB] hover:underline"
+              href={`https://celoscan.io/address/${portfolioAddress}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>Vault: {portfolioAddress}</span>
+              <ExternalLink className="h-3 w-3" />
             </a>
           )}
         </div>
 
         <button
           onClick={() => setShowConfig(!showConfig)}
-          className="text-xs font-semibold text-slate-500 hover:text-slate-800 transition"
+          className="text-[10px] font-bold uppercase tracking-wider text-[#2540EB] hover:opacity-70 transition"
         >
           {showConfig ? 'Hide Limits Detail' : 'View Safety Limits Detail'}
         </button>
       </div>
 
-      <div className="divide-y divide-slate-100">
+      {/* Token Rows */}
+      <div className="divide-y divide-stone-100">
         {positions.length === 0 ? (
-          <div className="py-12 text-center text-slate-400 text-sm">
+          <div className="py-16 text-center text-sm text-[#6B7280]">
             No tokens currently active.
           </div>
         ) : (
@@ -111,18 +126,25 @@ export const SelectedTokens: React.FC<SelectedTokensProps> = ({
             return (
               <div
                 key={pos.asset}
-                className="p-5 hover:bg-slate-50/70 transition flex flex-col gap-3"
+                className="px-8 py-6 transition hover:bg-stone-50/50"
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  {/* Token Identity with Authentic Logo */}
-                  <div className="flex items-center gap-3.5">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                  {/* Token Identity */}
+                  <div className="flex items-center gap-4">
                     {info.logo}
-                    <div>
+                    <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-slate-900 text-sm">{info.name}</span>
-                        <span className="text-xs font-semibold text-slate-400">{info.ticker}</span>
+                        <span
+                          className="text-sm font-bold text-[#0C1424]"
+                          style={{ fontFamily: 'var(--font-inter)' }}
+                        >
+                          {info.name}
+                        </span>
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
+                          {info.ticker}
+                        </span>
                       </div>
-                      <span className="text-[11px] text-slate-500 font-mono">
+                      <span className="font-mono text-[11px] text-[#6B7280]">
                         Holdings:{' '}
                         {parseFloat(pos.balance || '0').toLocaleString('en-US', {
                           maximumFractionDigits: 6,
@@ -132,52 +154,52 @@ export const SelectedTokens: React.FC<SelectedTokensProps> = ({
                     </div>
                   </div>
 
-                  {/* Financial Values in USD */}
-                  <div className="flex flex-wrap items-center sm:justify-end gap-6 sm:gap-8">
-                    {/* Dollar Value */}
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                  {/* Financial Values */}
+                  <div className="flex flex-wrap items-center gap-8 sm:gap-10">
+                    {/* Market Value */}
+                    <div className="space-y-1">
+                      <span className="block text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
                         Market Value
                       </span>
-                      <span className="font-mono text-sm font-bold text-slate-900">
-                        {hasQuote ? `$${pos.estimatedValueNum.toFixed(4)} USD` : 'Calculating...'}
+                      <span className="font-mono text-sm font-bold text-[#0C1424]">
+                        {hasQuote ? `$${pos.estimatedValueNum.toFixed(4)} USD` : 'Calculating…'}
                       </span>
                     </div>
 
                     {/* Return */}
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                    <div className="space-y-1">
+                      <span className="block text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
                         Return
                       </span>
                       {hasQuote && pos.investedNum > 0 ? (
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1.5">
                           <span
-                            className={`inline-block font-mono text-xs font-bold rounded px-1.5 py-0.5 ${
+                            className={`inline-block font-mono text-xs font-bold rounded px-2 py-0.5 ${
                               isPositive
-                                ? 'bg-emerald-50 text-emerald-700'
-                                : 'bg-slate-100 text-slate-600'
+                                ? 'bg-[#2540EB]/5 text-[#2540EB] border border-[#2540EB]/10'
+                                : 'bg-stone-100 text-[#6B7280] border border-stone-200/60'
                             }`}
                           >
                             {isPositive ? '+' : ''}
                             {pos.pnlPercent.toFixed(2)}%
                           </span>
-                          <span className="text-[11px] text-slate-400 font-mono">
+                          <span className="font-mono text-[11px] text-[#6B7280]">
                             ({isPositive ? '+' : ''}${Math.abs(pos.pnlValue).toFixed(4)})
                           </span>
                         </div>
                       ) : (
-                      <span className="text-xs text-slate-400 font-medium">
-                        {info.ticker === 'USDT' ? 'Stable' : 'Basis unavailable'}
-                      </span>
+                        <span className="text-xs font-medium text-[#6B7280]">
+                          {info.ticker === 'USDT' ? 'Stable' : 'Basis unavailable'}
+                        </span>
                       )}
                     </div>
 
-                    {/* Safety Status */}
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                    {/* Status */}
+                    <div className="space-y-1">
+                      <span className="block text-[10px] font-semibold uppercase tracking-wider text-[#6B7280]">
                         Status
                       </span>
-                      <span className="inline-block text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 rounded px-2 py-0.5">
+                      <span className="inline-block rounded border border-[#2540EB]/10 bg-[#2540EB]/5 px-2.5 py-0.5 text-[11px] font-bold text-[#2540EB]">
                         On-chain balance
                       </span>
                     </div>
@@ -186,16 +208,18 @@ export const SelectedTokens: React.FC<SelectedTokensProps> = ({
 
                 {/* Safety Limits Drawer */}
                 {showConfig && (
-                  <div className="mt-2 rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs flex flex-wrap items-center justify-between gap-3 text-slate-600">
-                    <div>
-                      <span className="font-bold text-slate-800">Stop-Loss Protection: </span>
-                      <span>If {info.name} drops past threshold, AI automatically sells into safe cash.</span>
+                  <div className="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-stone-200/60 bg-stone-50/50 px-5 py-4 text-xs text-[#6B7280]">
+                    <div className="max-w-md">
+                      <span className="font-bold text-[#0C1424]">Stop-Loss Protection: </span>
+                      <span>
+                        If {info.name} drops past threshold, AI automatically sells into safe cash.
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="rounded bg-white border border-slate-200 px-2 py-0.5 font-bold text-slate-700">
+                      <span className="rounded-lg border border-stone-200/60 bg-white px-2.5 py-1 font-bold text-[#0C1424]">
                         Stop: {info.stopLoss}
                       </span>
-                      <span className="rounded bg-white border border-slate-200 px-2 py-0.5 font-bold text-slate-700">
+                      <span className="rounded-lg border border-stone-200/60 bg-white px-2.5 py-1 font-bold text-[#0C1424]">
                         Target: {info.takeProfit}
                       </span>
                     </div>
