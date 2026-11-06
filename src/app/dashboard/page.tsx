@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Navbar } from '@/components/Navbar';
 import { AccountSummary } from '@/components/AccountSummary';
 import { SelectedTokens } from '@/components/SelectedTokens';
 import { CashReserve } from '@/components/CashReserve';
@@ -92,14 +91,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#F5F5F4] text-[#0C1424] flex flex-col">
-      {/* Top Nav */}
-      <Navbar
-        isPaused={botState?.isPaused || false}
-        isRefreshing={refreshing}
-        onRefresh={() => fetchData(true)}
-        onAddFunds={() => setIsInvestModalOpen(true)}
-      />
-
       {/* Main layout: 2 columns — content left, sidebar right */}
       <div className="flex flex-1 gap-6 px-6 py-12">
         {/* Main content — left column */}
