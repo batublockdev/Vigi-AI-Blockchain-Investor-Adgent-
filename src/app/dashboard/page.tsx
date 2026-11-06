@@ -66,9 +66,8 @@ export default function DashboardPage() {
   const totalGainAmountUSD = 0;
   const totalGainPercent = 0;
 
-  // Latest decision for CashReserve (sea cual sea, incluyendo hold)
-  // Priorizar decisiones con tx_hash (movimientos reales)
-  const latestDecision = (decisions as any[]).find((d: any) => d.tx_hash) || decisions[0] || null;
+  // Latest decision for CashReserve — always the most recent, including hold
+  const latestDecision = decisions[0] || null;
 
   if (loading && !data) {
     return (
