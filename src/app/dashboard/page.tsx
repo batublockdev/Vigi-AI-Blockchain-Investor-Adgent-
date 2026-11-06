@@ -215,7 +215,7 @@ export default function DashboardPage() {
         {/* Sidebar — right column, desktop only, sticky inside its column */}
         <div className="hidden lg:flex flex-col w-[340px] shrink-0">
           <div className="sticky top-6 h-[calc(100vh-120px)] rounded-2xl border border-stone-200/60 shadow-lg shadow-[#0C1424]/[0.03] overflow-hidden">
-            <DecisionsSidebar decisions={[...decisions, ...trades.map(t => ({
+            <DecisionsSidebar decisions={[...(decisions as any[]), ...(trades as any[]).map((t: any) => ({
               id: 1000 + t.id,
               timestamp: t.timestamp,
               action: t.action,
