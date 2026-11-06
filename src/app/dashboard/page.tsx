@@ -69,7 +69,7 @@ export default function DashboardPage() {
 
   // Latest decision for CashReserve (sea cual sea, incluyendo hold)
   // Priorizar decisiones con tx_hash (movimientos reales)
-  const latestDecision = decisions.find(d => d.tx_hash) || decisions[0] || null;
+  const latestDecision = (decisions as any[]).find((d: any) => d.tx_hash) || decisions[0] || null;
 
   if (loading && !data) {
     return (
