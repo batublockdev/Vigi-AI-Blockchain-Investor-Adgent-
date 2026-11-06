@@ -83,12 +83,12 @@ export default function DashboardPage() {
   }
 
   // Removed "Vigi Activity" tab — now lives permanently in the sidebar
-  const tabs = [
+  const tabs: Array<{ id: string; label: string; count?: number }> = [
     { id: 'overview', label: 'Portfolio' },
     { id: 'tokens', label: 'Tokens 78%', count: portfolioPositions.length },
     { id: 'reserve', label: 'Vigi Capital 20%' },
     { id: 'audit', label: 'Safety Log', count: stats.totalActivities },
-  ] as const;
+  ];
 
   return (
     <div className="min-h-screen bg-[#F5F5F4] text-[#0C1424] flex flex-col">
