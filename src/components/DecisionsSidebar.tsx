@@ -50,6 +50,9 @@ export const DecisionsSidebar: React.FC<DecisionsSidebarProps> = ({
       borrow: 'BORROW',
       repay: 'REPAY',
       withdraw: 'WITHDRAW',
+      invest: 'INVEST',
+      sell_all: 'STOP-LOSS',
+      sell_profit: 'TAKE-PROFIT',
       request_approval: 'NEEDS APPROVAL',
       request_setup: 'NEEDS SETUP',
     };
@@ -61,18 +64,6 @@ export const DecisionsSidebar: React.FC<DecisionsSidebarProps> = ({
     return d.toLocaleString('en-US', {
       month: 'short',
       day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
-  const formatDateLong = (timestamp: string) => {
-    const d = new Date(parseInt(timestamp, 10));
-    return d.toLocaleString('en-US', {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
     });
@@ -91,8 +82,6 @@ export const DecisionsSidebar: React.FC<DecisionsSidebarProps> = ({
   const activeDecisions = decisions.filter(
     (d) => d.action?.toLowerCase() !== 'hold'
   );
-
-  // Latest decision is handled by CashReserve, not here
 
   return (
     <div
@@ -138,14 +127,11 @@ export const DecisionsSidebar: React.FC<DecisionsSidebarProps> = ({
             {activeDecisions.map((dec) => {
               const wasExecuted = dec.executed === 1;
               const txHash = extractTxHash(dec);
-              const isLatest = latestDecision && dec.id === latestDecision.id;
 
               return (
                 <div
                   key={dec.id}
-                  className={`p-5 hover:bg-white transition-colors duration-200 ${
-                    isLatest ? 'bg-[#2540EB]/[0.02]' : 'bg-[#FAFAF9]'
-                  }`}
+                  className="p-5 hover:bg-white transition-colors duration-200 bg-[#FAFAF9]"
                 >
                   {/* Top row: icon + action + confidence */}
                   <div className="flex items-center justify-between mb-3">
