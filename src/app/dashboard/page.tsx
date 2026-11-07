@@ -207,20 +207,7 @@ export default function DashboardPage() {
         <div className="hidden lg:flex flex-col w-[340px] shrink-0">
           <div className="sticky top-6 h-[calc(100vh-120px)] rounded-2xl border border-stone-200/60 shadow-lg shadow-[#0C1424]/[0.03] overflow-hidden">
             <DecisionsSidebar decisions={[
-              ...(decisions as any[]),
-              ...(trades as any[]).map((t: any) => ({
-                id: 1000 + t.id,
-                timestamp: t.timestamp,
-                action: t.action,
-                asset: t.asset,
-                amount: t.amount,
-                reason: t.reason || '',
-                confidence: t.confidence || 0,
-                level: t.level || 'alto',
-                executed: 1,
-                result: '',
-                tx_hash: t.tx_hash,
-              })),
+              // Combine all sources, dedupe by tx_hash, sort by date desc
               ...(botActivity as any[]).map((a: any) => ({
                 id: 2000 + a.id,
                 timestamp: a.timestamp,
@@ -233,6 +220,31 @@ export default function DashboardPage() {
                 executed: a.tx_hash ? 1 : 0,
                 result: '',
                 tx_hash: a.tx_hash,
+              })),
+              ...(decisions as any[]).filter((d: any) => {
+                // Skip if already in botActivity by tx_hash
+                const tx = d.tx_hash;
+                if (!tx) return d.action !== 'hold'; // keep non-hold without tx
+                return !(botActivity as any[]).some((a: any) => a.tx_hash === tx);
+              }),
+              ...(trades as any[]).filter((t: any) => {
+                // Skip if already in botActivity or decisions by tx_hash
+                const tx = t.tx_hash;
+                if (!tx) return true;
+                return !(botActivity as any[]).some((a: any) => a.tx_hash === tx) &&
+                       !(decisions as any[]).some((d: any) => d.tx_hash === tx);
+              }).map((t: any) => ({
+                id: 1000 + t.id,
+                timestamp: t.timestamp,
+                action: t.action,
+                asset: t.asset,
+                amount: t.amount,
+                reason: t.reason || '',
+                confidence: t.confidence || 0,
+                level: t.level || 'alto',
+                executed: 1,
+                result: '',
+                tx_hash: t.tx_hash,
               })),
             ].sort((a: any, b: any) => parseInt(b.timestamp) - parseInt(a.timestamp))} />
           </div>
