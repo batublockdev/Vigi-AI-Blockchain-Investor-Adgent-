@@ -106,6 +106,13 @@ export async function GET() {
       );
       const trades = tradesRes.rows;
 
+      // 3c. StockWallet activity — bot events (invest, sell, stop-loss, take-profit)
+      const activityRes = await client.query(
+        `SELECT id, timestamp, type, action, asset, asset_symbol, balance, estimated_value, invested, reason, tx_hash, pool_fee, confidence
+         FROM stockwallet_activity ORDER BY timestamp DESC LIMIT 20`
+      );
+      const botActivity = activityRes.rows;
+
       // 4. Performance
       const perfRes = await client.query(
         `SELECT id, timestamp, total_value, total_pnl, win_rate, trade_count 
@@ -244,6 +251,7 @@ export async function GET() {
           knowledge,
           decisions,
           trades,
+          botActivity,
           performance,
           positions,
           stats: {

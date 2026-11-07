@@ -54,6 +54,7 @@ export default function DashboardPage() {
     balances = {},
     decisions = [],
     trades = [],
+    botActivity = [],
     positions = [],
     stats = { totalActivities: 0, totalDecisions: 0, trackedAssets: 0 },
   } = data || {};
@@ -205,19 +206,35 @@ export default function DashboardPage() {
         {/* Sidebar — right column, desktop only, sticky inside its column */}
         <div className="hidden lg:flex flex-col w-[340px] shrink-0">
           <div className="sticky top-6 h-[calc(100vh-120px)] rounded-2xl border border-stone-200/60 shadow-lg shadow-[#0C1424]/[0.03] overflow-hidden">
-            <DecisionsSidebar decisions={[...(decisions as any[]), ...(trades as any[]).map((t: any) => ({
-              id: 1000 + t.id,
-              timestamp: t.timestamp,
-              action: t.action,
-              asset: t.asset,
-              amount: t.amount,
-              reason: t.reason || '',
-              confidence: t.confidence || 0,
-              level: t.level || 'alto',
-              executed: 1,
-              result: '',
-              tx_hash: t.tx_hash,
-            }))]} />
+            <DecisionsSidebar decisions={[
+              ...(decisions as any[]),
+              ...(trades as any[]).map((t: any) => ({
+                id: 1000 + t.id,
+                timestamp: t.timestamp,
+                action: t.action,
+                asset: t.asset,
+                amount: t.amount,
+                reason: t.reason || '',
+                confidence: t.confidence || 0,
+                level: t.level || 'alto',
+                executed: 1,
+                result: '',
+                tx_hash: t.tx_hash,
+              })),
+              ...(botActivity as any[]).map((a: any) => ({
+                id: 2000 + a.id,
+                timestamp: a.timestamp,
+                action: a.action,
+                asset: a.asset_symbol || a.asset,
+                amount: a.balance || a.estimated_value,
+                reason: a.reason || '',
+                confidence: a.confidence || 0,
+                level: 'bot',
+                executed: a.tx_hash ? 1 : 0,
+                result: '',
+                tx_hash: a.tx_hash,
+              })),
+            ].sort((a: any, b: any) => parseInt(b.timestamp) - parseInt(a.timestamp))} />
           </div>
         </div>
       </div>
