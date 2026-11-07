@@ -91,10 +91,10 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#F5F5F4] text-[#0C1424] flex flex-col">
-      {/* Main layout: 2 columns — content left, sidebar right */}
-      <div className="flex flex-1 justify-center gap-6 px-6 py-12">
-        {/* Main content — left column, centered */}
-        <main className="flex-1 min-w-0 max-w-3xl space-y-8">
+      {/* Main layout: 2 columns — content fills left, sidebar right */}
+      <div className="flex flex-1 gap-6 px-6 py-12">
+        {/* Main content — fills all available width */}
+        <main className="flex-1 min-w-0 space-y-8">
           {/* Back link */}
           <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-wider text-ink-muted" style={{ fontFamily: 'var(--font-inter)' }}>
             <Link href="/" className="hover:text-[#2540EB] transition-colors">
