@@ -28,6 +28,9 @@ export const ProblemSection: React.FC = () => {
               de los adultos en LATAM no tienen acceso a instrumentos de
               inversión tradicionales
             </p>
+            <a href="https://www.worldbank.org/en/topic/financialinclusion/brief/global-findex" target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-[10px] text-ink-muted/60 hover:text-[#2540EB] transition-colors" style={{ fontFamily: 'var(--font-inter)' }}>
+              World Bank Global Findex 2021
+            </a>
           </div>
           <div className="bg-[#F5F5F4] p-10">
             <div className="font-serif-display text-5xl font-medium text-[#2540EB] mb-3">85%</div>
@@ -36,6 +39,9 @@ export const ProblemSection: React.FC = () => {
               falta de interés, sino falta de acceso: exchanges que no operan
               en la región y métodos de pago locales no integrados
             </p>
+            <a href="https://www.chainalysis.com/blog/2024-global-crypto-adoption-index/" target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-[10px] text-ink-muted/60 hover:text-[#2540EB] transition-colors" style={{ fontFamily: 'var(--font-inter)' }}>
+              Chainalysis Geography of Crypto 2024
+            </a>
           </div>
           <div className="bg-[#F5F5F4] p-10">
             <div className="font-serif-display text-5xl font-medium text-[#0C1424] mb-3">60%+</div>
@@ -43,6 +49,9 @@ export const ProblemSection: React.FC = () => {
               evita crypto por la volatilidad extrema y el miedo a perder
               su dinero
             </p>
+            <a href="https://www.gemini.com/cryptopedia/state-of-crypto-global-report" target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-[10px] text-ink-muted/60 hover:text-[#2540EB] transition-colors" style={{ fontFamily: 'var(--font-inter)' }}>
+              Gemini State of Crypto 2024
+            </a>
           </div>
         </div>
 
