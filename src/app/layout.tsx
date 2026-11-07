@@ -10,7 +10,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Adgent Protocol — Turning Crisis Into Opportunity",
+  title: "Vigi Protocol — Turning Crisis Into Opportunity",
   description: "Autonomous AI-driven DeFi investment system with zero-trust security on Celo. Stop-loss protection, take-profit harvesting, and AI-managed portfolios.",
 };
 

@@ -36,7 +36,7 @@ export const Hero: React.FC = () => {
         {/* H1 — serif moderna */}
         <h1 className="font-serif-display hero-title-shadow text-5xl sm:text-6xl md:text-7xl font-medium tracking-tight text-[#0C1424] leading-[1.05] mb-16">
           Tu portafolio<br />
-          protegido por IA
+          invertido y protegido por IA
         </h1>
       </div>
 
@@ -47,9 +47,9 @@ export const Hero: React.FC = () => {
           <div className="max-w-sm">
             <p className="text-sm text-ink-light leading-relaxed" style={{ fontFamily: 'var(--font-inter)' }}>
               Vigi combina inteligencia artificial con smart contracts de
-              zero-trust para gestionar tu portafolio DeFi en Celo. Stop-loss
-              automático, take-profit y custodia non-custodial. Sin perder
-              el control de tus fondos.
+              zero-trust para invertir y proteger tu portafolio DeFi en Celo.
+              Inversión autónoma, stop-loss automático, take-profit y custodia
+              non-custodial. Sin perder el control de tus fondos.
             </p>
           </div>
 

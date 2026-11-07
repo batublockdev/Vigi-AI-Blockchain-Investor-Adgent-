@@ -83,7 +83,7 @@ export const CTAFinal: React.FC = () => {
               <span className="relative text-white text-[9px] font-black">A</span>
             </div>
             <span className="text-sm font-bold text-[#0C1424]" style={{ fontFamily: 'var(--font-inter)' }}>
-              Adgent Protocol
+              Vigi Protocol
             </span>
           </div>
           <p className="text-[11px] text-ink-muted max-w-md text-center leading-relaxed">

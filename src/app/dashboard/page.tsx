@@ -98,7 +98,7 @@ export default function DashboardPage() {
           {/* Back link */}
           <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-wider text-ink-muted" style={{ fontFamily: 'var(--font-inter)' }}>
             <Link href="/" className="hover:text-[#2540EB] transition-colors">
-              ← Adgent Protocol
+              ← Vigi Protocol
             </Link>
             <span className="text-stone-300">/</span>
             <span className="text-[#0C1424]">Dashboard</span>

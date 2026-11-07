@@ -38,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex flex-col">
             <div className="flex items-center gap-2.5">
               <span className="text-[15px] font-bold tracking-tight text-[#0C1424]">
-                Adgent Protocol
+                Vigi Protocol
               </span>
 
               {/* Status badge */}

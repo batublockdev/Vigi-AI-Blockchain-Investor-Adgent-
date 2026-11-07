@@ -40,7 +40,7 @@ export const LandingNav: React.FC = () => {
               <span className="relative text-white text-[10px] font-black tracking-tight">A</span>
             </div>
             <span className="text-sm font-bold tracking-tight text-[#0C1424]" style={{ fontFamily: 'var(--font-inter)' }}>
-              Adgent Protocol
+              Vigi Protocol
             </span>
           </Link>
 
