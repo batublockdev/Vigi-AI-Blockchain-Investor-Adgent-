@@ -12,7 +12,7 @@ import {
   publicClient,
   getViemWalletClient,
 } from '@/lib/web3';
-import { formatUnits, Address, Hex, encodeFunctionData, encodeAbiParameters, keccak256, concatHex, toHex } from 'viem';
+import { formatUnits, Address, Hex, encodeAbiParameters, keccak256, concatHex } from 'viem';
 import { celo } from 'viem/chains';
 import { Loader2, CheckCircle2, AlertCircle, ExternalLink, ArrowRight, Wallet } from 'lucide-react';
 
@@ -109,14 +109,11 @@ function computeExecuteHash(
     ],
     [target, value, innerHash, nonce, chainId]
   );
-  const hash = keccak256(encoded);
-  // EIP-191 prefix
-  return keccak256(
-    concatHex([
-      toHex('\x19Ethereum Signed Message:\n32', { size: 28 }),
-      hash,
-    ])
-  );
+  // Return the RAW hash (without EIP-191 prefix).
+  // MetaMask's personal_sign will apply the EIP-191 prefix itself.
+  // The contract also applies toEthSignedMessageHash() = EIP-191 prefix.
+  // So we must NOT double-prefix — pass rawHash to personal_sign.
+  return keccak256(encoded);
 }
 
 function buildAaveWithdrawData(
@@ -443,8 +440,11 @@ export const WithdrawAICapitalModal: React.FC<WithdrawAICapitalModalProps> = ({
         AI_CAPITAL_ACCOUNT_ADDRESS
       );
 
-      // 3. Compute EIP-191 hash
-      const ethSignedHash = computeExecuteHash(
+      // 3. Compute raw hash (without EIP-191 prefix).
+      // MetaMask's personal_sign applies the EIP-191 prefix automatically.
+      // The contract also applies toEthSignedMessageHash() = EIP-191 prefix.
+      // So we pass the raw hash to personal_sign to avoid double-prefixing.
+      const rawHash = computeExecuteHash(
         AAVE_POOL,
         0n,
         withdrawData,
@@ -453,10 +453,12 @@ export const WithdrawAICapitalModal: React.FC<WithdrawAICapitalModalProps> = ({
       );
 
       // 4. Sign with MetaMask (personal_sign)
+      // personal_sign does: keccak256("\x19Ethereum Signed Message:\n32" + rawHash)
+      // which matches what the contract expects (toEthSignedMessageHash)
       setTxStatus('waiting-wallet');
       const signature = await provider.request({
         method: 'personal_sign',
-        params: [ethSignedHash, walletAddress],
+        params: [rawHash, walletAddress],
       });
 
       // MetaMask returns 0x-prefixed hex signature (r + s + v = 65 bytes)
