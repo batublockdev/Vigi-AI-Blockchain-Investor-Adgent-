@@ -115,6 +115,31 @@ export const InvestModal: React.FC<InvestModalProps> = ({
         return;
       }
 
+      // Force MetaMask to show the account selector popup
+      try {
+        await provider.request({
+          method: 'wallet_requestPermissions',
+          params: [{ eth_accounts: {} }],
+        });
+      } catch (permErr: any) {
+        // If user rejects, fall back silently — might already have permissions
+        if (permErr.code !== 4001) {
+          // Non-rejection error, continue anyway
+        }
+      }
+
+      // Force MetaMask to show the account selector popup
+      try {
+        await provider.request({
+          method: 'wallet_requestPermissions',
+          params: [{ eth_accounts: {} }],
+        });
+      } catch (permErr: any) {
+        if (permErr.code !== 4001) {
+          // Non-rejection error — continue, might already have permissions
+        }
+      }
+
       const accounts = await provider.request({
         method: 'eth_requestAccounts',
       });

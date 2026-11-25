@@ -11,6 +11,7 @@ interface AccountSummaryProps {
   totalGainPercent: number;
   showPerformance?: boolean;
   onAddFunds: () => void;
+  onWithdraw?: () => void;
 }
 
 export const AccountSummary: React.FC<AccountSummaryProps> = ({
@@ -22,6 +23,7 @@ export const AccountSummary: React.FC<AccountSummaryProps> = ({
   totalGainPercent,
   showPerformance = true,
   onAddFunds,
+  onWithdraw,
 }) => {
   const isPositive = totalGainAmount >= 0;
 
@@ -96,14 +98,25 @@ export const AccountSummary: React.FC<AccountSummaryProps> = ({
           </p>
         </div>
 
-        {/* Add Funds button */}
-        <button
-          onClick={onAddFunds}
-          className="self-start sm:self-auto rounded-2xl bg-[#0C1424] px-6 py-3 text-white text-xs font-semibold transition hover:bg-[#0C1424]/90 active:scale-[0.97]"
-          style={{ fontFamily: 'var(--font-inter)' }}
-        >
-          + Add Funds
-        </button>
+        {/* Add Funds + Withdraw buttons */}
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          {onWithdraw && (
+            <button
+              onClick={onWithdraw}
+              className="rounded-2xl border border-stone-300 bg-white px-6 py-3 text-[#0C1424] text-xs font-semibold transition hover:bg-stone-50 active:scale-[0.97]"
+              style={{ fontFamily: 'var(--font-inter)' }}
+            >
+              ↗ Withdraw
+            </button>
+          )}
+          <button
+            onClick={onAddFunds}
+            className="rounded-2xl bg-[#0C1424] px-6 py-3 text-white text-xs font-semibold transition hover:bg-[#0C1424]/90 active:scale-[0.97]"
+            style={{ fontFamily: 'var(--font-inter)' }}
+          >
+            + Add Funds
+          </button>
+        </div>
       </div>
 
       {/* ── Allocation Section ────────────────────────────────────── */}

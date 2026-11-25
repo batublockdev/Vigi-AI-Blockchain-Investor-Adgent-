@@ -145,6 +145,12 @@ export const VAULT_DEPOSIT_ABI = parseAbi([
   'function depositAsset(address _token, uint256 _amount, bytes _path) external',
 ]);
 
+export const VAULT_WITHDRAW_ABI = parseAbi([
+  'function selltokenAll(bytes[] _path) external',
+  'function withdrawAssetUsdt(uint256 _amount) external',
+  'function withdrawAsset(address _token) external',
+]);
+
 /**
  * Creates a Viem WalletClient using injected window.ethereum / MetaMask
  */

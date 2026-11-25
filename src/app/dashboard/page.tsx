@@ -8,6 +8,7 @@ import { CashReserve } from '@/components/CashReserve';
 import { AiActivity } from '@/components/AiActivity';
 import { ProtectionLog } from '@/components/ProtectionLog';
 import { InvestModal } from '@/components/InvestModal';
+import { WithdrawModal } from '@/components/WithdrawModal';
 import { DecisionsSidebar } from '@/components/DecisionsSidebar';
 
 export default function DashboardPage() {
@@ -15,6 +16,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [isInvestModalOpen, setIsInvestModalOpen] = useState<boolean>(false);
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'tokens' | 'reserve' | 'audit'>(
     'overview'
   );
@@ -114,6 +116,7 @@ export default function DashboardPage() {
             totalGainPercent={totalGainPercent}
             showPerformance={false}
             onAddFunds={() => setIsInvestModalOpen(true)}
+            onWithdraw={() => setIsWithdrawModalOpen(true)}
           />
 
           {/* Tab Navigation */}
@@ -165,6 +168,7 @@ export default function DashboardPage() {
                 accountAddress={aiCapital?.address}
                 tokenBalances={aiCapital ? { USDT: aiCapital.usdt, aCelUSDT: aiCapital.aCelUSDT } : null}
                 onAddFunds={() => setIsInvestModalOpen(true)}
+                onWithdraw={() => setIsWithdrawModalOpen(true)}
                 latestDecision={latestDecision}
               />
             </div>
@@ -191,6 +195,7 @@ export default function DashboardPage() {
                 accountAddress={aiCapital?.address}
                 tokenBalances={aiCapital ? { USDT: aiCapital.usdt, aCelUSDT: aiCapital.aCelUSDT } : null}
                 onAddFunds={() => setIsInvestModalOpen(true)}
+                onWithdraw={() => setIsWithdrawModalOpen(true)}
                 latestDecision={latestDecision}
               />
             </div>
@@ -254,6 +259,11 @@ export default function DashboardPage() {
       <InvestModal
         isOpen={isInvestModalOpen}
         onClose={() => setIsInvestModalOpen(false)}
+      />
+
+      <WithdrawModal
+        isOpen={isWithdrawModalOpen}
+        onClose={() => setIsWithdrawModalOpen(false)}
       />
 
       {/* Footer */}

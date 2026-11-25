@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Bot, Zap, ShieldCheck, ArrowRightLeft, ExternalLink, TrendingUp, TrendingDown, Clock, Activity } from 'lucide-react';
+import { Bot, Zap, ShieldCheck, ArrowRightLeft, ExternalLink, TrendingUp, TrendingDown, Clock, Activity, ArrowUpFromLine } from 'lucide-react';
 
 interface CashReserveProps {
   aave: {
@@ -12,6 +12,7 @@ interface CashReserveProps {
   accountAddress?: string;
   tokenBalances?: { USDT: string; aCelUSDT: string } | null;
   onAddFunds: () => void;
+  onWithdraw?: () => void;
   latestDecision?: {
     id: number;
     timestamp: string;
@@ -27,7 +28,7 @@ interface CashReserveProps {
   } | null;
 }
 
-export const CashReserve: React.FC<CashReserveProps> = ({ aave, accountAddress, tokenBalances, onAddFunds, latestDecision }) => {
+export const CashReserve: React.FC<CashReserveProps> = ({ aave, accountAddress, tokenBalances, onAddFunds, onWithdraw, latestDecision }) => {
   const collateralValueUSD = parseFloat(aave.collateral || '0');
   const debtValueUSD = parseFloat(aave.debt || '0');
 
@@ -148,13 +149,25 @@ export const CashReserve: React.FC<CashReserveProps> = ({ aave, accountAddress, 
           </div>
         </div>
 
-        <button
-          onClick={onAddFunds}
-          className="shrink-0 rounded-2xl bg-[#0C1424] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#1A2235] active:scale-95"
-          style={{ fontFamily: 'var(--font-inter)' }}
-        >
-          Add to Vigi Reserve
-        </button>
+        <div className="flex shrink-0 gap-3">
+          {onWithdraw && (
+            <button
+              onClick={onWithdraw}
+              className="inline-flex items-center gap-2 rounded-2xl border border-stone-300 bg-white px-5 py-3 text-sm font-semibold text-[#0C1424] transition hover:border-[#2540EB] hover:text-[#2540EB] active:scale-95"
+              style={{ fontFamily: 'var(--font-inter)' }}
+            >
+              <ArrowUpFromLine className="h-4 w-4" />
+              Withdraw
+            </button>
+          )}
+          <button
+            onClick={onAddFunds}
+            className="rounded-2xl bg-[#0C1424] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#1A2235] active:scale-95"
+            style={{ fontFamily: 'var(--font-inter)' }}
+          >
+            Add to Vigi Reserve
+          </button>
+        </div>
       </div>
 
       {/* Spacer */}
