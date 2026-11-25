@@ -9,6 +9,7 @@ import { AiActivity } from '@/components/AiActivity';
 import { ProtectionLog } from '@/components/ProtectionLog';
 import { InvestModal } from '@/components/InvestModal';
 import { WithdrawModal } from '@/components/WithdrawModal';
+import { WithdrawAICapitalModal } from '@/components/WithdrawAICapitalModal';
 import { DecisionsSidebar } from '@/components/DecisionsSidebar';
 
 export default function DashboardPage() {
@@ -17,6 +18,7 @@ export default function DashboardPage() {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [isInvestModalOpen, setIsInvestModalOpen] = useState<boolean>(false);
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState<boolean>(false);
+  const [isAICapitalWithdrawOpen, setIsAICapitalWithdrawOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'tokens' | 'reserve' | 'audit'>(
     'overview'
   );
@@ -168,7 +170,7 @@ export default function DashboardPage() {
                 accountAddress={aiCapital?.address}
                 tokenBalances={aiCapital ? { USDT: aiCapital.usdt, aCelUSDT: aiCapital.aCelUSDT } : null}
                 onAddFunds={() => setIsInvestModalOpen(true)}
-                onWithdraw={() => setIsWithdrawModalOpen(true)}
+                onWithdraw={() => setIsAICapitalWithdrawOpen(true)}
                 latestDecision={latestDecision}
               />
             </div>
@@ -195,7 +197,7 @@ export default function DashboardPage() {
                 accountAddress={aiCapital?.address}
                 tokenBalances={aiCapital ? { USDT: aiCapital.usdt, aCelUSDT: aiCapital.aCelUSDT } : null}
                 onAddFunds={() => setIsInvestModalOpen(true)}
-                onWithdraw={() => setIsWithdrawModalOpen(true)}
+                onWithdraw={() => setIsAICapitalWithdrawOpen(true)}
                 latestDecision={latestDecision}
               />
             </div>
@@ -264,6 +266,11 @@ export default function DashboardPage() {
       <WithdrawModal
         isOpen={isWithdrawModalOpen}
         onClose={() => setIsWithdrawModalOpen(false)}
+      />
+
+      <WithdrawAICapitalModal
+        isOpen={isAICapitalWithdrawOpen}
+        onClose={() => setIsAICapitalWithdrawOpen(false)}
       />
 
       {/* Footer */}
